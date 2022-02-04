@@ -1,9 +1,11 @@
 package com.pluralsight.conferencedemo.controllers;
 import com.pluralsight.conferencedemo.models.Speaker;
-import com.pluralsight.conferencedemo.repositories.SpeakerRepository;
-import org.springframework.beans.BeanUtils;
+import com.pluralsight.conferencedemo.services.SpeakerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -11,39 +13,38 @@ import java.util.List;
 @RequestMapping("/api/v1/speakers")
 public class SpeakerController {
     @Autowired
-    private final SpeakerRepository speakerRepository;
+    private final SpeakerService speakerService;
 
-    public SpeakerController(SpeakerRepository speakerRepository) {
-        this.speakerRepository = speakerRepository;
+    public SpeakerController(SpeakerService speakerService) {
+        this.speakerService = speakerService;
     }
 
     @GetMapping
     public List<Speaker> list() {
-        return speakerRepository.findAll();
+        return speakerService.list();
     }
 
     @GetMapping
     @RequestMapping("{id}")
-    public Speaker get(@PathVariable Long id){
-        return speakerRepository.findById(id).orElse(null);
+    public Speaker get(@PathVariable Long id) {
+        return speakerService.get(id);
     }
 
     @PostMapping
-    public Speaker create(@RequestBody final Speaker speaker){
-        return speakerRepository.saveAndFlush(speaker);
+    public Speaker create(@RequestBody final Speaker speaker) {
+        return speakerService.create(speaker);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long id){
-        speakerRepository.getOne(id).remove();
-        speakerRepository.deleteById(id);
+    public void delete(@PathVariable Long id) {
+        speakerService.delete(id);
     }
 
-    @RequestMapping(value ="{id}", method = RequestMethod.PUT)
-    public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker){
-        //TODO: Add validation that all attributes are passed in, otherwise return a 400 bad payload
-        Speaker existingSpeaker = speakerRepository.getOne(id);
-        BeanUtils.copyProperties(speaker, existingSpeaker, "speaker_id");
-        return speakerRepository.saveAndFlush(existingSpeaker);
+
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
+    public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker) {
+        return speakerService.update(id, speaker);
     }
+
+
 }
