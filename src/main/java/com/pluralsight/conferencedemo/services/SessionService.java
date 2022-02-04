@@ -37,7 +37,7 @@ public class SessionService {
     }
 
     public Session update(Long id, Session session){
-        //TODO: Add validation that all attributes are passed in, otherwise return a 400 bad payload
+        //Add validation that all attributes are passed in, otherwise return a 400 bad payload
         Session existingSession = sessionRepository.getOne(id);
         BeanUtils.copyProperties(session, existingSession, "session_id");
 
