@@ -14,6 +14,9 @@ public class TicketPrice {
     @ManyToOne
     private PriceCategory priceCategory;
 
+    @OneToOne
+    private TicketType ticketType;
+
     public Long getTicket_price_id() {
         return ticket_price_id;
     }
@@ -36,5 +39,13 @@ public class TicketPrice {
 
     public void setPriceCategory(PriceCategory priceCategory) {
         this.priceCategory = priceCategory;
+    }
+
+    public TicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(TicketType ticketType) {
+        this.ticketType = ticketType;
     }
 }
