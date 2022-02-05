@@ -14,7 +14,7 @@ public class TicketPrice {
     @ManyToOne
     private PriceCategory priceCategory;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private TicketType ticketType;
 
     public Long getTicket_price_id() {
