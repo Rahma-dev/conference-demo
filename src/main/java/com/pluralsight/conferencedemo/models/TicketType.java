@@ -14,7 +14,7 @@ public class TicketType {
     private String description;
     private Boolean include_workshop;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<TicketPrice> prices = new ArrayList<>();
 
     public TicketType() {

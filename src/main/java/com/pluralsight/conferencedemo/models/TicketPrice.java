@@ -1,17 +1,17 @@
 package com.pluralsight.conferencedemo.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "ticket_prices")
 public class TicketPrice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticket_price_id", nullable = false)
     private Long ticket_price_id;
     private Float base_price;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private PriceCategory priceCategory;
 
     @OneToOne(cascade = CascadeType.ALL)
