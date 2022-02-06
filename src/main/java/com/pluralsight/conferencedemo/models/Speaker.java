@@ -2,6 +2,8 @@ package com.pluralsight.conferencedemo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
+import org.junit.After;
+import org.junit.Before;
 
 import javax.persistence.*;
 import java.util.List;
@@ -94,11 +96,13 @@ public class Speaker {
         this.sessions = sessions;
     }
 
+
     public void removeSession(Session session) {
         sessions.remove(session);
         session.getSpeakers().remove(this);
     }
 
+    @Before
     public void remove() {
         for (Session session : sessions) {
             removeSession(session);
