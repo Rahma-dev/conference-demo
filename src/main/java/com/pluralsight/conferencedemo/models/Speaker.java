@@ -2,7 +2,6 @@ package com.pluralsight.conferencedemo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
-import org.junit.After;
 import org.junit.Before;
 
 import javax.persistence.*;
@@ -28,6 +27,9 @@ public class Speaker {
             {CascadeType.PERSIST, CascadeType.MERGE})
     @JsonIgnore //To prevent serialization back to sessions creating a loop of data in a ManyToMany relationship.
     private List<Session> sessions;
+
+    @ManyToMany(mappedBy = "speakers")
+    private List<Workshop> workshops;
 
     public Speaker() {
     }
